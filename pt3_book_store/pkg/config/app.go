@@ -1,16 +1,18 @@
 package config
 
 import (
-	"github.com/jinzhu/gorm"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 var (
 	db *gorm.DB
 )
 
+// "postgres://postgres:postgres@localhost:5432/books?sslmode=disable"
 func Connect() {
-	connectionString := "postgres://postgres:postgres@localhost:5432/books?sslmode=disable"
-	d, err := gorm.Open("postgres", connectionString)
+	dsn := "host=localhost user=postgres password=postgres dbname=books port=5432 sslmode=disable"
+	d, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic(err)
 	}
