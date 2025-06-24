@@ -24,8 +24,8 @@ func CreateBook(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetBooks(w http.ResponseWriter, r *http.Request) {
-	book := models.Book{}
-	books := book.GetAllBooks()
+	// book := models.Book{}
+	books := NewBook.GetAllBooks()
 	res, _ := json.Marshal(books)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
@@ -33,13 +33,13 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetBookById(w http.ResponseWriter, r *http.Request) {
-	book := models.Book{}
+	// book := models.Book{}
 	bookId := mux.Vars(r)["id"]
 	ID, err := strconv.ParseInt(bookId, 0, 0)
 	if err != nil {
 		fmt.Println("error while parsing")
 	}
-	bookDetails, _ := book.GetBookById(ID)
+	bookDetails, _ := NewBook.GetBookById(ID)
 	res, _ := json.Marshal(bookDetails)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
@@ -48,7 +48,7 @@ func GetBookById(w http.ResponseWriter, r *http.Request) {
 
 func UpdateBook(w http.ResponseWriter, r *http.Request) {
 	updateBook := models.Book{}
-	book := models.Book{}
+	// book := models.Book{}
 
 	utils.ParseBody(r, updateBook)
 	bookId := mux.Vars(r)["id"]
@@ -57,7 +57,7 @@ func UpdateBook(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("error while parsing")
 	}
 
-	bookDetails, db := book.GetBookById(ID)
+	bookDetails, db := NewBook.GetBookById(ID)
 
 	if updateBook.Name != "" {
 		bookDetails.Name = updateBook.Name
